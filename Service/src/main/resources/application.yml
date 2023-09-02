@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ServicesCourse
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+access_token: bj635azOW2eO3xG5QgJ2lDLJEYz6bMnmGEEgUMaljM0fgb/XQnAQFeLsj3Hpby5yScZFWsROjVarE8q8WX7mwQ==
+refresh_token: PyQiUfwAPHSwHlxKjkZVprS+nD42Jz3iiRtOKLLUX9jLXjr0RzqOzvU4EVQgbUnN7ggLzC20JXO2fHkepmz42A==
