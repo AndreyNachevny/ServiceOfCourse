@@ -1,15 +1,16 @@
 package RestApi.Service.controllers;
 
+import RestApi.Service.dto.JwtRequest;
 import RestApi.Service.dto.JwtResponse;
 import RestApi.Service.dto.LoginRequest;
 import RestApi.Service.dto.RegistrationDto;
 import RestApi.Service.exception.AuthenticationException;
+import RestApi.Service.exception.CheckException;
 import RestApi.Service.exception.ErrorResponse;
 import RestApi.Service.exception.NotCreatedException;
 import RestApi.Service.models.User;
 import RestApi.Service.security.AuthService;
 import RestApi.Service.services.UserService;
-import RestApi.Service.exception.CheckException;
 import RestApi.Service.util.RegistrationUserValidate;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,22 @@ public class AuthenticationController {
         CheckException.check(bindingResult);
         JwtResponse tokens = authService.login(loginRequest);
         return ResponseEntity.ok((tokens));
+    }
+
+    @PostMapping("/accessToken")
+    public ResponseEntity<JwtResponse> accessToken(@RequestBody @Valid JwtRequest jwtRequest,
+                                                   BindingResult bindingResult){
+        CheckException.check(bindingResult);
+        JwtResponse accessToken = authService.getAccessToken(jwtRequest.getRefreshToken());
+        return ResponseEntity.ok(accessToken);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtResponse> refresh(@RequestBody @Valid JwtRequest jwtRequest,
+                                               BindingResult bindingResult){
+        CheckException.check(bindingResult);
+        JwtResponse accessAndRefreshTokens = authService.refresh(jwtRequest.getRefreshToken());
+        return ResponseEntity.ok(accessAndRefreshTokens);
     }
 
     @ExceptionHandler(NotCreatedException.class)

@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
+
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder encoder;
@@ -39,7 +40,7 @@ public class UserService {
 
     public User getByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow(
-                () -> new NotFoundException("User with this email does not exist")
+                () -> new NotFoundException("User with this email does not exist in database")
         );
     }
 }
